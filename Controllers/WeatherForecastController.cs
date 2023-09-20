@@ -23,15 +23,16 @@ namespace ProkhorovaKT_31_20.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet(Name ="GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            var rng = new Random();
+            _logger.LogError("Method was called"); 
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
+                Date = DateOnly.FromDataTime(DateTime.Now.AddDays(index)),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
         }
